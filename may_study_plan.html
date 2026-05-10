@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5월 수능 공부 계획표</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; padding: 16px; color: #222; }
+h1 { text-align: center; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.sub { text-align: center; font-size: 12px; color: #888; margin-bottom: 16px; }
+.filters { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+.fb { padding: 6px 18px; border-radius: 20px; border: 1.5px solid #ccc; background: white; cursor: pointer; font-size: 13px; font-weight: 600; }
+.fb.on { background: #1a1a1a; color: white; border-color: #1a1a1a; }
+.week { margin-bottom: 24px; }
+.wt { font-size: 14px; font-weight: 700; color: #666; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; margin-bottom: 10px; }
+.card { background: white; border-radius: 14px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.ch { display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: #f8f8f8; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+.dl { font-weight: 700; font-size: 15px; }
+.db { font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; }
+.mon{background:#dbeafe;color:#1d4ed8} .tue{background:#ede9fe;color:#7c3aed} .wed{background:#dcfce7;color:#15803d}
+.thu{background:#fef9c3;color:#a16207} .fri{background:#ffedd5;color:#c2410c} .sat{background:#fce7f3;color:#be185d} .sun{background:#fee2e2;color:#b91c1c}
+.nt { font-size: 11px; color: #bbb; margin-left: auto; }
+.cb { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }
+.tr { font-size: 11px; color: #aaa; }
+.meal { font-size: 11px; color: #f59e0b; font-weight: 600; }
+.task { display: flex; align-items: flex-start; gap: 9px; padding: 9px 11px; border-radius: 9px; cursor: pointer; user-select: none; }
+.task.done { opacity: 0.35; text-decoration: line-through; }
+.tk { background: #fff7ed; }
+.tm { background: #eff6ff; }
+.ti { font-size: 17px; flex-shrink: 0; }
+.tc { display: flex; flex-direction: column; gap: 2px; }
+.tl { font-size: 11px; font-weight: 700; }
+.lk { color: #ea580c; } .lm { color: #2563eb; }
+.tt { font-size: 13px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<h1>📚 5월 수능 공부 계획표</h1>
+<p class="sub">영어 단어 — 매일 자기 전 20~30분 고정 🔤</p>
+<div class="filters">
+  <button class="fb on" onclick="setF('전체',this)">전체</button>
+  <button class="fb" onclick="setF('국어',this)">국어</button>
+  <button class="fb" onclick="setF('수학',this)">수학</button>
+</div>
+<div id="plan"></div>
+
+<script>
+var plan = [
+  { week:"1주차 (5/10~5/11)", days:[
+    { date:"5/10", day:"일", dc:"sun",
+      free:"18:00~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"저녁 이후만 가능",
+      k:"독서 교과서 개념 1~5 (55분)",
+      m:"볼텍스 수1 01~21 복습 (2h)" },
+    { date:"5/11", day:"월", dc:"mon",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"독서 교과서 개념 6~13 (88분) + 문학 교과서 개념 1~9 (63분)",
+      m:"만점마중 수1 1권 01~26 (2.5h) + 만점마중 확통 1권 01~27 (2.5h) + 하프/확통 13회 (80분)" },
+  ]},
+  { week:"2주차 (5/12~5/18)", days:[
+    { date:"5/12", day:"화", dc:"tue",
+      free:"08:00~10:00, 13:45~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 13:15~13:45 / 저녁 19:00~19:30",
+      note:"수업: 10:30~13:15 / 이동 각 30분",
+      k:"독서 인문/예술 1~5 (55분)",
+      m:"볼텍스 수1 22~57 (3.5h)" },
+    { date:"5/13", day:"수", dc:"wed",
+      free:"08:00~10:00, 12:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 11:45~12:15 / 저녁 19:00~19:30",
+      note:"수업: 10:30~11:45 / 이동 각 30분",
+      k:"독서 인문/예술 6~13 (88분)",
+      m:"만점마중 수1 1권 27~59 (3h) + 브릿지 1,2회 (160분)" },
+    { date:"5/14", day:"목", dc:"thu",
+      free:"15:15~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"수업: 9:00~10:15, 13:30~14:45 / 이동 각 30분",
+      k:"독서 사회/문화 1~4 (44분)",
+      m:"만점마중 확통 1권 28~57 (3h)" },
+    { date:"5/15", day:"금", dc:"fri",
+      free:"08:00~14:00, 19:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:15 (이동 직후)",
+      note:"수업: 16:00~17:15 / 이동 각 2시간",
+      k:"독서 사회/문화 5~13 (99분)",
+      m:"하프/확통 14회 (80분) + 브릿지 3,4회 (160분)" },
+    { date:"5/16", day:"토", dc:"sat",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"독서 과학/기술 1~13 (143분) + 문학 고전시가 1~6 (42분)",
+      m:"볼텍스 수1 58~78 (2h) + 만점마중 수1 2권 61~101 (4h)" },
+    { date:"5/17", day:"일", dc:"sun",
+      free:"18:00~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"저녁 이후만 가능",
+      k:"독서 주제통합 1~4 (44분)",
+      m:"만점마중 확통 2권 58~93 (3.5h)" },
+  ]},
+  { week:"3주차 (5/19~5/25)", days:[
+    { date:"5/19", day:"월", dc:"mon",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"독서 주제통합 5~13 (99분) + 문학 고전시가 7~11 (35분)",
+      m:"하프/확통 15회 (80분) + 브릿지 5,6회 (160분) + 남지현T 3월 대비 (80분)" },
+    { date:"5/20", day:"화", dc:"tue",
+      free:"08:00~10:00, 13:45~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 13:15~13:45 / 저녁 19:00~19:30",
+      note:"수업: 10:30~13:15 / 이동 각 30분",
+      k:"독서 실전학습 1~4 (44분)",
+      m:"볼텍스 수1 79~100 (2h) + 만점마중 수1 2권 102~132 (3h)" },
+    { date:"5/21", day:"수", dc:"wed",
+      free:"08:00~10:00, 12:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 11:45~12:15 / 저녁 19:00~19:30",
+      note:"수업: 10:30~11:45 / 이동 각 30분",
+      k:"독서 실전학습 5~8 (44분) + 문학 현대시 1~6 (42분)",
+      m:"만점마중 확통 2권 94~126 (3h) + 하프/확통 16회 (80분)" },
+    { date:"5/22", day:"목", dc:"thu",
+      free:"15:15~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"수업: 9:00~10:15, 13:30~14:45 / 이동 각 30분",
+      k:"문학 현대시 7~11 (35분) + 고전산문 1~4 (28분)",
+      m:"3월 모의고사 오답 (1h) + 볼텍스 수1 79~100 복습 (2h)" },
+    { date:"5/23", day:"금", dc:"fri",
+      free:"08:00~14:00, 19:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:15 (이동 직후)",
+      note:"수업: 16:00~17:15 / 이동 각 2시간",
+      k:"문학 고전산문 5~11 (49분)",
+      m:"브릿지 7,8회 (160분) + 월간 남지현 4월호 (80분)" },
+    { date:"5/24", day:"토", dc:"sat",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"문학 현대소설 1~11 (77분) + 극/수필 1~8 (56분)",
+      m:"만점마중 확통 01~32 복습 (3h) + 만점마중 수2 01~31 복습 (3h) + 만점마중 확통 33~60 (2.5h)" },
+    { date:"5/25", day:"일", dc:"sun",
+      free:"18:00~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"저녁 이후만 가능",
+      k:"문학 갈래복합 1~4 (28분)",
+      m:"만점마중 수2 32~60 (2.5h)" },
+  ]},
+  { week:"4주차 (5/26~5/31) — 마무리 & 버퍼", days:[
+    { date:"5/26", day:"월", dc:"mon",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"문학 갈래복합 5~11 (49분) + 실전학습 1~8 (56분)",
+      m:"만점마중 수2 61~74 (1.5h) + 볼텍스 수2 01~27 (2.5h) + 브릿지 9,10회 (160분) + 하프/확통 17회 (80분)" },
+    { date:"5/27", day:"화", dc:"tue",
+      free:"08:00~10:00, 13:45~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 13:15~13:45 / 저녁 19:00~19:30",
+      note:"수업: 10:30~13:15 / 이동 각 30분",
+      k:"국어 전체 복습 or 취약 파트",
+      m:"밀린 과제 보충" },
+    { date:"5/28", day:"수", dc:"wed",
+      free:"08:00~10:00, 12:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 11:45~12:15 / 저녁 19:00~19:30",
+      note:"수업: 10:30~11:45 / 이동 각 30분",
+      k:"복습 or 자유",
+      m:"밀린 과제 보충 or 자유" },
+    { date:"5/29", day:"목", dc:"thu",
+      free:"15:15~22:30",
+      meal:"🍚 저녁 19:00~19:30",
+      note:"수업: 9:00~10:15, 13:30~14:45 / 이동 각 30분",
+      k:"복습",
+      m:"보충" },
+    { date:"5/30", day:"금", dc:"fri",
+      free:"08:00~14:00, 19:15~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:15 (이동 직후)",
+      note:"수업: 16:00~17:15 / 이동 각 2시간",
+      k:"복습 or 완료 🎉",
+      m:"보충 or 완료 🎉" },
+    { date:"5/31", day:"토", dc:"sat",
+      free:"08:00~22:30",
+      meal:"🍚 아침 07:30~08:00 / 점심 12:30~13:00 / 저녁 19:00~19:30",
+      note:"",
+      k:"최종 마무리 🎉",
+      m:"최종 마무리 🎉" },
+  ]},
+];
+
+var filter = "전체";
+var done = {};
+
+function setF(f, btn) {
+  filter = f;
+  document.querySelectorAll('.fb').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  render();
+}
+
+function toggle(key) {
+  done[key] = !done[key];
+  render();
+}
+
+function render() {
+  var html = '';
+  for (var i = 0; i < plan.length; i++) {
+    var w = plan[i];
+    html += '<div class="week"><div class="wt">' + w.week + '</div>';
+    for (var j = 0; j < w.days.length; j++) {
+      var d = w.days[j];
+      var kk = d.date + '-k';
+      var mk = d.date + '-m';
+      html += '<div class="card">';
+      html += '<div class="ch"><span class="dl">' + d.date + '</span>';
+      html += '<span class="db ' + d.dc + '">' + d.day + '요일</span>';
+      if (d.note) html += '<span class="nt">' + d.note + '</span>';
+      html += '</div>';
+      html += '<div class="cb">';
+      html += '<div class="tr">🕐 ' + d.free + '</div>';
+      html += '<div class="meal">' + d.meal + '</div>';
+      if (filter !== '수학') {
+        html += '<div class="task tk' + (done[kk]?' done':'') + '" onclick="toggle(\'' + kk + '\')">';
+        html += '<span class="ti">' + (done[kk]?'✅':'📖') + '</span>';
+        html += '<div class="tc"><span class="tl lk">국어</span><span class="tt">' + d.k + '</span></div></div>';
+      }
+      if (filter !== '국어') {
+        html += '<div class="task tm' + (done[mk]?' done':'') + '" onclick="toggle(\'' + mk + '\')">';
+        html += '<span class="ti">' + (done[mk]?'✅':'🔢') + '</span>';
+        html += '<div class="tc"><span class="tl lm">수학</span><span class="tt">' + d.m + '</span></div></div>';
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+  }
+  document.getElementById('plan').innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
